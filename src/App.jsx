@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserTable from "./Table/UserTable";
 import AddUserForm from "./Form/AddUserForm";
-import editUser from "./Form/editUser";
+import EditUser from "./Form/editUser";
 
 function App() {
-  const [count, setCount] = useState(0);
-  
+  const [count, setCount] = useState([]);
+  const [data, setData] = useState([]);
 
-  const usersData = [
-    {
-      name: "Santhosh",
-      UserName: "Santhosh@123",
-    },
-  ];
+  const usersData = async () => {
+    let response = await fetch("http://localhost:4000/Data").then((res) =>
+      res.json()
+    );
+    // console.log("object", response);
+    setData(response);
+  };
+  
+  useEffect(() => {
+    usersData();
+  }, []);
   //ADD USER Pandra Function
   const addUser = (user) => {
     user.id = users.length + 1;
-    console.log("object", user);
+    // console.log("object", user);
     setUsers([...users, user]);
   };
   //DELETE Pandra Function
@@ -50,7 +55,7 @@ function App() {
             {editing ? (
               <div>
                 <h2>Edit User</h2>
-                <editUser
+                <EditUser
                   setEditing={setEditing}
                   currentUser={curentstate}
                   upadteUser={updateUser}

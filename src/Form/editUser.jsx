@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const editUser = (props) => {
+const EditUser = (props) => {
   const [user, setUser] = useState(props.currentUser);
 
-//   const handleInputChange = (event) => {
-//     const { name, value } = event.target;
-//     setUser({ ...user, [name]: value });
-//   };
+  useEffect(() => {
+    setUser(props.currentUser);
+  }, [props]);
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
         if (!user.name || !user.UserName) return;
         props.updateUser(user.id, user);
-        setUser(initial);
+       
       }}
     >
       <div class="form-floating mb-3">
@@ -44,9 +43,9 @@ const editUser = (props) => {
         />
         <label for="floatingInput">User Name</label>
       </div>
-      <button className="btn btn-success mt-3 w-100 ms-5">Update User</button>
+      <button className="btn btn-success mt-3  ms-5">Update User</button>
       <button
-        className="btn btn-success mt-3 w-100 ms-5"
+        className="btn btn-success mt-3  ms-5"
         onClick={() => {
           props.setEditing(false);
           setUser({ id: null, name: "", UserName: "" });
@@ -58,4 +57,4 @@ const editUser = (props) => {
   );
 };
 
-export default editUser;
+export default EditUser;
